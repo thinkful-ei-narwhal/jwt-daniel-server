@@ -57,7 +57,7 @@ describe('Things Endpoints', function() {
           it(`Responds with 401 'Missing basic token' When no basic token `, () => {
             return supertest(app)
               .get(endpoint.path)
-              .expect(401, { error: `Missing basic auth token` })
+              .expect(401, { error: `Missing basic token` })
           })
           it(`responds 401 'Unauthorized request' when no credentials in token`, () => {
             const userNoCreds = { user_name: '', password: '' }
@@ -92,7 +92,7 @@ describe('Things Endpoints', function() {
 
   describe(`GET /api/things`, () => {
     context(`Given no things`, () => {
-      beforeEach(() => db.into('thingful_users').insert(testUsers))
+      beforeEach(() => helpers.seedUsers(db, testUsers))
       it(`responds with 200 and an empty list`, () => {
         console.log(testUsers[0])
         console.log(helpers.makeAuthHeader(testUsers[0]))
@@ -159,7 +159,7 @@ describe('Things Endpoints', function() {
 
   describe(`GET /api/things/:thing_id`, () => {
     context(`Given no things`, () => {
-      beforeEach(() => db.into('thingful_users').insert(testUsers))
+      beforeEach(() => helpers.seedUsers(db, testUsers))
       it(`responds with 404`, () => {
         const thingId = 123456
         return supertest(app)
@@ -224,7 +224,7 @@ describe('Things Endpoints', function() {
 
   describe(`GET /api/things/:thing_id/reviews`, () => {
     context(`Given no things`, () => {
-      beforeEach(() => db.into('thingful_users').insert(testUsers))
+      beforeEach(() => helpers.seedUsers(db, testUsers))
       it(`responds with 404`, () => {
         const thingId = 123456
         return supertest(app)

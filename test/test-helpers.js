@@ -244,7 +244,7 @@ function seedUsers(db, users) {
 }
 
 function seedThingsTables(db, users, things, reviews=[]) {
-  return seedUsers(trx, users)
+  return seedUsers(db, users)
     .then(() =>
       db
         .into('thingful_things')
