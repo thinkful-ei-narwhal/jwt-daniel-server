@@ -85,8 +85,6 @@ describe('Things Endpoints', function() {
     context(`Given no things`, () => {
       beforeEach(() => helpers.seedUsers(db, testUsers))
       it(`responds with 200 and an empty list`, () => {
-        console.log(testUsers[0])
-        console.log(helpers.makeAuthHeader(testUsers[0]))
 
         return supertest(app)
           .get('/api/things/')
