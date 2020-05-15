@@ -10,11 +10,6 @@ describe('Reviews Endpoints', function() {
     testUsers,
   } = helpers.makeThingsFixtures()
 
-  function makeAuthHeader(user) {
-    const token = Buffer.from(`${user.user_name}:${user.password}`).toString('base64')
-      return `Basic ${token}`
-  }
-
   before('make knex instance', () => {
     db = knex({
       client: 'pg',
@@ -49,7 +44,7 @@ describe('Reviews Endpoints', function() {
       }
       return supertest(app)
         .post('/api/reviews')
-        .set('Authorization', makeAuthHeader(testUsers[0]))
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
         .send(newReview)
         .expect(201)
         .expect(res => {
@@ -98,7 +93,7 @@ describe('Reviews Endpoints', function() {
 
         return supertest(app)
           .post('/api/reviews')
-          .set('Authorization', makeAuthHeader(testUsers[0]))
+          .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
           .send(newReview)
           .expect(400, {
             error: `Missing '${field}' in request body`,
